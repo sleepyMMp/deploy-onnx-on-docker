@@ -1,4 +1,5 @@
-from flask import Flask
+import os
+from flask import Flask, request
 import run_onnx_cpu
 import onnxruntime
 
@@ -10,6 +11,14 @@ session = onnxruntime.InferenceSession("yolov8n.onnx")
 def index():
     return "hello world"
 
-@qpp.route('/detector', methods=['POST'])
+@app.route('/detector', methods=['POST'])
 def detector():
-    return "1"
+    f = request.files.get('image')
+    filename = f.filename# save file 
+    filepath = os.path.join( "./", filename)
+    f.save(filepath)
+    detected_image = run_onnx_cpu.onnxruntimeFunc(filepath,session)
+    return detected_image
+
+
+app.run()

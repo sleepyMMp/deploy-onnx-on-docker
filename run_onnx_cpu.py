@@ -73,7 +73,7 @@ def onnxruntimeFunc(img, session):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    return detections
+    return original_image
 
 # if __name__ == '__main__':
 #     onnxruntimeFunc("IMG_6430.JPG")
